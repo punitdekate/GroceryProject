@@ -1,0 +1,115 @@
+pimcore:
+    workflows:
+        workflow:
+            label: "Product Workflow"
+            type: "state_machine"
+            supports:
+                - 'Pimcore\Model\DataObject\Grocery'
+            places:
+                StartProcessing:
+                    label: "Start Processing"
+                    color: "#377ea9"
+                    permissions:
+                        - objectLayout: 1
+                Rejected:
+                    label: "Rejected product"
+                    color: "#28a013"
+                FoodData:
+                    label: "Food Data"
+                    title: "Food Data"
+                    color: "#d9ef36"
+                    permissions:
+                        - objectLayout: 2
+                Media:
+                    label: "Media"
+                    title: "Media"
+                    color: "#d9ef36"
+                    permissions:
+                        - objectLayout: 3
+                ManufacturingDetails:
+                    label: "Manufacturering Details"
+                    title: "Add Manufacturer"
+                    color: "#d9ef36"
+                    permissions:
+                        - objectLayout: 4
+                PackerAndSellerDetails:
+                    label: "Packer And Seller Details"
+                    title: "PackingAndSelling"
+                    color: "#28a013"
+                    permissions:
+                        - objectLayout: 5
+                ModifyContent:
+                    label: "Modify Content"
+                    title: "ModifyContent"
+                    color: "#28a013"
+                    permissions:
+                        - objectLayout: 1
+                Accepted:
+                    label: "Product Accepted"
+                    color: "#28a013"
+
+            transitions:
+                start_processing:
+                    from: StartProcessing
+                    to: FoodData
+                    options:
+                        label: "Add Food Data"
+                        notes:
+                            commentEnabled: false
+                            commentRequired: false
+                fooddata_updated:
+                    from: FoodData
+                    to: Media
+                    options:
+                        label: "Add Media"
+                        notes:
+                            commentEnabled: false
+                            commentRequired: false
+                media_added:
+                    from: Media
+                    to: ManufacturingDetails
+                    options:
+                        label: " Manufacturer Details"
+                        notes:
+                            commentEnabled: false
+                            commentRequired: false
+                manufacturingdata_added:
+                    from: ManufacturingDetails
+                    to: PackerAndSellerDetails
+                    options:
+                        label: "Packer And Seller"
+                        notes:
+                            commentEnabled: false
+                            commentRequired: false
+                modify_content:
+                    from: ModifyContent
+                    to: StartProcessing
+                    guard: "is_fully_authenticated() and (is_granted('ROLE_DATAENTRY') or is_granted('ROLE_PIMCORE_ADMIN'))"
+                    options:
+                        label:
+                        notes:
+                            commentEnabled: false
+                            commentRequired: false
+                reject_product:
+                    from: [StartProcessing, PackerAndSellerDetails]
+                    to: ModifyContent   
+                    guard: "is_fully_authenticated() and (is_granted('ROLE_REVIEWER') or is_granted('ROLE_PIMCORE_ADMIN'))"
+                    options:
+                        label: "Product Rejected"
+                        notes:
+                            commentEnabled: true
+                            commentRequired: true
+                publish:
+                    from: PackerAndSellerDetails
+                    to: Accepted
+                    guard: "is_fully_authenticated() and (is_granted('ROLE_REVIEWER') or is_granted('ROLE_PIMCORE_ADMIN'))"
+                    options:
+                        label: "Publish the product"
+                        notes:
+                            commentEnabled: true
+                            commentRequired: true
+                            additionalFields:
+                                - name: "timeWorked"
+                                  fieldType: "input"
+                                  title: "Time Spent"
+                                  required: true

@@ -1,0 +1,39 @@
+pimcore:
+    custom_report:
+        definitions:
+            WorkflowReport:
+                name: WorkflowReport
+                sql: ''
+                dataSourceConfig:
+                    -
+                        sql: CategoryRelation
+                        from: 'element_workflow_state as w JOIN object_2 as g ON w.cid=g.o_id'
+                        where: ''
+                        groupby: CategoryRelation
+                        type: sql
+                columnConfiguration:
+                    -
+                        name: CategoryRelation
+                        display: true
+                        export: true
+                        order: true
+                        width: ''
+                        label: ''
+                        id: extModel387-5
+                niceName: ''
+                group: ''
+                groupIconClass: ''
+                iconClass: ''
+                menuShortcut: true
+                reportClass: ''
+                chartType: pie
+                pieColumn: CategoryRelation
+                pieLabelColumn: CategoryRelation
+                xAxis: CategoryRelation
+                yAxis:
+                    - CategoryRelation
+                modificationDate: 1676893711
+                creationDate: 1676893326
+                shareGlobally: true
+                sharedUserNames: {  }
+                sharedRoleNames: {  }

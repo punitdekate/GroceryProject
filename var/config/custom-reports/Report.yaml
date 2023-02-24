@@ -1,0 +1,47 @@
+pimcore:
+    custom_report:
+        definitions:
+            Report:
+                name: Report
+                sql: ''
+                dataSourceConfig:
+                    -
+                        sql: 'CategoryRelation,Count(*)'
+                        from: object_2
+                        where: ''
+                        groupby: CategoryRelation
+                        type: sql
+                columnConfiguration:
+                    -
+                        name: 'Count(*)'
+                        display: true
+                        export: true
+                        order: true
+                        width: ''
+                        label: ''
+                        id: extModel1590-2
+                    -
+                        name: CategoryRelation
+                        display: true
+                        export: true
+                        order: true
+                        width: ''
+                        label: ''
+                        id: extModel1590-3
+                niceName: ''
+                group: ''
+                groupIconClass: ''
+                iconClass: ''
+                menuShortcut: true
+                reportClass: ''
+                chartType: pie
+                pieColumn: 'Count(*)'
+                pieLabelColumn: CategoryRelation
+                xAxis: null
+                yAxis: {  }
+                modificationDate: 1676888781
+                creationDate: 1676351959
+                shareGlobally: true
+                sharedUserNames:
+                    - admin
+                sharedRoleNames: {  }

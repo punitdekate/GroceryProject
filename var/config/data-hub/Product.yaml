@@ -1,0 +1,84 @@
+pimcore_data_hub:
+    configurations:
+        Product:
+            general:
+                active: true
+                type: dataImporterDataObject
+                name: Product
+                description: ''
+                group: ''
+                path: null
+                modificationDate: 1676894349
+                createDate: 1676891524
+            loaderConfig:
+                type: asset
+                settings:
+                    assetPath: /Bever.csv
+            interpreterConfig:
+                type: csv
+                settings:
+                    skipFirstRow: true
+                    delimiter: ','
+                    enclosure: '"'
+                    escape: \
+            resolverConfig:
+                elementType: dataObject
+                dataObjectClassId: '2'
+                loadingStrategy:
+                    type: notLoad
+                createLocationStrategy:
+                    type: staticPath
+                    settings:
+                        path: /Test
+                locationUpdateStrategy:
+                    type: noChange
+                publishingStrategy:
+                    type: noChangeUnpublishNew
+            processingConfig:
+                executionType: sequential
+                idDataIndex: ''
+            mappingConfig:
+                -
+                    label: 'new column'
+                    dataSourceIndex:
+                        - '0'
+                    transformationResultType: default
+                    dataTarget:
+                        type: direct
+                        settings:
+                            fieldName: SKU
+                            language: ''
+                            writeIfTargetIsNotEmpty: true
+                            writeIfSourceIsEmpty: true
+                    transformationPipeline: {  }
+                -
+                    label: Grocery
+                    dataSourceIndex:
+                        - '0'
+                        - '2'
+                        - '3'
+                        - '4'
+                        - '5'
+                        - '6'
+                        - '7'
+                        - '8'
+                        - '9'
+                        - '10'
+                        - '11'
+                    transformationResultType: array
+                    dataTarget:
+                        type: direct
+                        settings:
+                            fieldName: FoodCategory.Baking.products
+                            language: ''
+                            writeIfTargetIsNotEmpty: true
+                            writeIfSourceIsEmpty: true
+                    transformationPipeline: {  }
+            executionConfig:
+                scheduleType: job
+                cronDefinition: ''
+                scheduledAt: '20-02-2023 05:00'
+            permissions:
+                user: {  }
+                role: {  }
+            workspaces: {  }
