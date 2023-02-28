@@ -5,8 +5,10 @@ namespace App\Controller;
 use Google\Service\YouTube;
 use GraphQL\Utils\Value;
 use Pimcore\Controller\FrontendController;
-use Pimcore\Model\DataObject\Brand;
+use Pimcore\Model\DataObject\Category;
 use Pimcore\Model\DataObject\Grocery;
+// use Pimcore\Model\DataObject\Staples\Category;
+use Pimcore\Model\DataObject\Manufacturer;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Pimcore\Model\Dataobject;
@@ -57,10 +59,12 @@ class SpecificProductFilter extends FrontendController
      */
     public function TestApi(Request $request): Response //Api code for Relation 
     {
-        $object =new Grocery\Listing();
+        // $object =new Grocery\Listing();
+        $object =Manufacturer::getById(233);
+
         $result = [];
-        $output=[];
-        foreach ($object as $items) {
+        // $output=[];
+        // foreach ($object as $items) {
             // $category = $items->getCategoryRelation();
             // foreach ($category as $value) {
             //     array_push($result , $items->getId(), $value->getCategoryType());
@@ -73,15 +77,32 @@ class SpecificProductFilter extends FrontendController
             // else{
             //     $output=array("category"=>$result,"Image"=>"");
             // }
-            $localizedField=$items->getLocalizedfields()->getLocalizedValue("en");
-            array_push($result,
-                $items->getId(),
-                $localizedField
-            );
-            $output=array($result);
+            // $entries = new Category\Listing();
+            // $entries->setCondition("CategoryType LIKE ?", "%o%");
+            // $entries->load();
+ 
+            // foreach($entries as $entry) 
+            // {
+                // array_push($result,
+                //     $entry->getId(),
+                //     $entry->getCategoryType()
+                // );
+                // array_push($output,$result);
+                // $result=[];
+                // $output=array(
+                    // "ID"=>$entry->getId(),
+                    // "Type"=>$entry->getCategoryType()
+                // );
+                // array_push($result,$output);
+            // }
+ 
             
-        }
-        return $this->json(["success" => $output]);
+        // }
+        $result=array(
+            "Name"=>$object->getManufacturerName(),
+            "Image"=>$object->getLogo()->getType()
+        );
+        return $this->json(["success" => $result]);
     }
 
 

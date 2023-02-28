@@ -80,6 +80,9 @@ class ApiController extends FrontendController
                         "EAN" => $Water->getEAN()
                     );
                 }
+                $Manufacturer=$value->getManufactureRelation()!=NULL ? $value->getManufactureRelation()->getManufacturerName():NULL;
+                $Packer=$value->getPackerRelation()!=NULL ? $value->getPackerRelation()[0]->getPackerName():NULL;
+                $Seller=$value->getSellerRelation()!=NULL ? $value->getSellerRelation()[0]->getName():NULL;
                 if($smallOutput!=NULL)
                 {
                 $output[] = array(
@@ -92,9 +95,9 @@ class ApiController extends FrontendController
                     "ManufacturingDate" => $value->getManufactureDate(),
                     "ExpiryDate" => $value->getExpiryDate(),
                     "Snacks" => $smallOutput,
-                    // "Manufacture"=>$value->getManufactureRelation()->getManufacturerName(),
-                    // "Packer"=>$value->getPackerRelation()[0]->getPackerName(),
-                    // "Seller"=>$value->getSellerRelation()->getSellerId()
+                    "Manufacture"=>$Manufacturer,
+                    "Packer"=>$Packer,
+                    "Seller"=>$Seller
                 );
                 } 
                 $smallOutput = [];
